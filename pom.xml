@@ -1,0 +1,348 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.shark</groupId>
+  <artifactId>mvctemp</artifactId>
+  <packaging>war</packaging>
+  <version>0.0.1-SNAPSHOT</version>
+
+  <name>mvctemp</name>
+  <url>http://maven.apache.org</url>
+  
+<!-- 版本定义 -->
+<properties>  
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.7</java.version>
+		
+		<!-- spring版本号 -->  
+		<!-- 3.1.1.RELEASE --><!-- 3.2.4.RELEASE -->
+		<spring.version>4.0.2.RELEASE</spring.version>  
+
+		<!-- mybatis版本号 -->
+		<mybatis.version>3.2.6</mybatis.version>  
+
+		<!-- log4j日志文件管理包版本 -->
+		<slf4j.version>1.7.7</slf4j.version>  
+		<log4j.version>1.2.17</log4j.version>  
+</properties> 
+
+<!--  不同环境的变量配置 -->
+<profiles>
+	<profile>
+		<id>local</id>
+		<activation>    
+                <activeByDefault>true</activeByDefault>    
+        </activation>
+		<properties>
+				<package.env>local</package.env>
+				<deploy.url>http://localhost:8080</deploy.url>
+		</properties>
+	</profile>
+	<profile>
+		<id>dev</id>
+		<properties>
+				<package.env>dev</package.env>
+				<deploy.url>http://121.43.178.85:8080</deploy.url>
+		</properties>
+	</profile>
+	<profile>
+		<id>test</id>
+		<properties>
+				<package.env>test</package.env>
+				<deploy.url>http://121.43.178.85:8080</deploy.url>
+		</properties>
+	</profile>
+	<profile>
+		<id>prd</id>
+		<properties>
+				<package.env>prd</package.env>
+				<deploy.url>http://121.43.178.85:8080</deploy.url>
+		</properties>
+	</profile>
+</profiles>
+
+  
+<!-- 依赖配置 -->
+<dependencies>
+
+
+<!-- Junit -->
+<dependency>  
+	<groupId>junit</groupId>  
+	<artifactId>junit</artifactId>  
+	<version>4.11</version>  
+	<!-- 表示开发的时候引入，发布的时候不会加载此包 -->  
+	<scope>test</scope>  
+</dependency>
+
+<!-- (非打包)servlet-api -->
+<dependency>
+		<groupId>javax.servlet</groupId>
+		<artifactId>javax.servlet-api</artifactId>
+		<version>3.0.1</version>
+		<scope>provided</scope>
+	</dependency>
+	<dependency>
+		<groupId>javax.servlet.jsp</groupId>
+		<artifactId>jsp-api</artifactId>
+		<version>2.2</version>
+		<scope>provided</scope>
+</dependency>
+
+
+	
+<!-- Spring -->
+<dependency>  
+	<groupId>org.springframework</groupId>  
+	<artifactId>spring-core</artifactId>  
+	<version>${spring.version}</version>  
+</dependency>  
+
+<dependency>  
+	<groupId>org.springframework</groupId>  
+	<artifactId>spring-aop</artifactId>  
+	<version>${spring.version}</version>  
+</dependency>  
+
+<dependency>
+		<groupId>org.springframework</groupId>
+		<artifactId>spring-tx</artifactId>
+		<version>${spring.version}</version>
+</dependency>  
+
+<dependency>  
+	<groupId>org.springframework</groupId>  
+	<artifactId>spring-jdbc</artifactId>  
+	<version>${spring.version}</version>  
+</dependency>  
+
+<dependency>  
+	<groupId>org.springframework</groupId>  
+	<artifactId>spring-oxm</artifactId>  
+	<version>${spring.version}</version>  
+</dependency>  
+
+<dependency>  
+	<groupId>org.springframework</groupId>  
+	<artifactId>spring-context-support</artifactId>  
+	<version>${spring.version}</version>  
+</dependency>  
+
+<dependency>  
+	<groupId>org.springframework</groupId>  
+	<artifactId>spring-web</artifactId>  
+	<version>${spring.version}</version>  
+</dependency>  
+
+<dependency>  
+	<groupId>org.springframework</groupId>  
+	<artifactId>spring-webmvc</artifactId>  
+	<version>${spring.version}</version>  
+</dependency>  
+
+<dependency>  
+	<groupId>org.springframework</groupId>  
+	<artifactId>spring-test</artifactId>  
+	<version>${spring.version}</version>  
+</dependency> 
+
+
+<!-- slf4j+log4j2 -->  
+<!-- log start -->  
+<dependency>  
+	<groupId>org.slf4j</groupId>  
+	<artifactId>slf4j-api</artifactId>  
+	<version>1.7.7</version>  
+</dependency>  
+<dependency>
+    <groupId>org.apache.logging.log4j</groupId>
+    <artifactId>log4j-api</artifactId>
+    <version>2.5</version>
+</dependency>
+<dependency>
+    <groupId>org.apache.logging.log4j</groupId>
+    <artifactId>log4j-core</artifactId>
+    <version>2.5</version>
+</dependency>
+<dependency>
+    <groupId>org.apache.logging.log4j</groupId>
+    <artifactId>log4j-slf4j-impl</artifactId>
+    <version>2.5</version>
+</dependency>
+<!-- log end -->  
+
+
+<!-- Dbcp数据源 -->  
+<dependency>  
+	<groupId>commons-dbcp</groupId>  
+	<artifactId>commons-dbcp</artifactId>  
+	<version>1.4</version>  
+</dependency>  
+
+<!-- Mysql驱动 -->  
+<dependency>  
+	<groupId>mysql</groupId>  
+	<artifactId>mysql-connector-java</artifactId>  
+	<version>5.1.30</version>  
+</dependency>  
+
+<!-- Mybatis -->  
+<dependency>  
+	<groupId>org.mybatis</groupId>  
+	<artifactId>mybatis</artifactId>  
+	<version>${mybatis.version}</version>  
+</dependency>  
+<!-- mybatis/spring包 -->  
+<dependency>  
+	<groupId>org.mybatis</groupId>  
+	<artifactId>mybatis-spring</artifactId>  
+	<version>1.2.2</version>  
+</dependency>  
+
+
+<!-- fastjson -->
+<dependency>
+    <groupId>com.alibaba</groupId>
+    <artifactId>fastjson</artifactId>
+    <version>1.1.41</version>
+</dependency>
+
+
+<!-- Redis -->
+<dependency>  
+	<groupId>redis.clients</groupId>  
+	<artifactId>jedis</artifactId>  
+	<version>2.6.2</version>  
+</dependency>  
+<!-- Redis/spring包 -->  
+<dependency>  
+	<groupId>org.springframework.data</groupId>  
+	<artifactId>spring-data-redis</artifactId>  
+	<version>1.4.2.RELEASE</version>  
+</dependency>  
+
+<!-- mongodb3.2.7 -->
+<dependency>
+    <groupId>org.mongodb</groupId>
+    <artifactId>mongo-java-driver</artifactId>
+    <version>3.2.0</version>
+</dependency>
+<dependency>
+    <groupId>org.springframework.data</groupId>
+    <artifactId>spring-data-mongodb</artifactId>
+    <version>1.7.2.RELEASE</version>
+</dependency> 
+
+<!-- AOP -->
+<dependency>  
+  <groupId>org.aspectj</groupId>  
+  <artifactId>aspectjrt</artifactId>  
+  <version>1.8.0</version>  
+</dependency>  
+<dependency>  
+  <groupId>org.aspectj</groupId>  
+  <artifactId>aspectjweaver</artifactId>  
+  <version>1.8.0</version>  
+</dependency>  
+<dependency>
+    <groupId>cglib</groupId>
+    <artifactId>cglib-nodep</artifactId>
+    <version>2.2.2</version>
+</dependency>
+
+
+<dependency>
+    <groupId>org.apache.commons</groupId>
+    <artifactId>commons-pool2</artifactId>
+    <version>2.4.2</version>
+</dependency>
+
+</dependencies>
+
+<build>
+	<plugins>
+		<!-- maven-war插件 -->
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-war-plugin</artifactId>
+		    <version>2.5</version>
+		    	<configuration>
+				<archive>
+					<addMavenDescriptor>false</addMavenDescriptor>
+				</archive>
+				<webResources>
+					<!-- 根据变量替换的资源,filtering=true -->
+					<resource>
+						<directory>src/main/resources/${package.env}</directory>
+						<targetPath>WEB-INF/classes</targetPath>
+						<filtering>true</filtering>
+					</resource>
+					<!-- 固定不变资源,filtering=false -->
+					<resource>
+						<directory>src/main/resources/config</directory>
+						<targetPath>WEB-INF/classes</targetPath>
+						<filtering>false</filtering>
+					</resource>
+				</webResources>
+			</configuration>
+		</plugin>
+		<!-- maven-tomcat插件 -->
+		<plugin>
+			<groupId>org.apache.tomcat.maven</groupId>
+		    <artifactId>tomcat7-maven-plugin</artifactId>
+		    <version>2.2</version>
+			<configuration>
+				<url>${deploy.url}/manager/text</url>
+				<path>/mvctemp</path>
+				<uriEncoding>UTF-8</uriEncoding>
+				<port>8080</port>
+				<server>mytomcat7</server>
+				<username>admin</username>
+				<password>password</password>
+			</configuration>
+		</plugin>
+		<!-- maven-jetty插件 -->
+		<plugin>
+			<groupId>org.mortbay.jetty</groupId>
+			<artifactId>maven-jetty-plugin</artifactId>
+			<version>6.1.6</version>
+		</plugin>
+		<!-- maven编译java代码插件 -->
+		<plugin>
+			<groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-compiler-plugin</artifactId>
+		    <version>2.0.2</version>
+			<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+					<encoding>UTF-8</encoding>
+			</configuration>
+		</plugin>
+        <!-- maven编译资源文件插件 -->
+        <plugin>
+        	<groupId>org.apache.maven.plugins</groupId>
+		    <artifactId>maven-resources-plugin</artifactId>
+		    <version>2.5</version>
+            <configuration>
+                 <encoding>UTF-8</encoding>
+            </configuration>
+        </plugin>
+	</plugins>
+	<finalName>mvctemp</finalName>
+	
+	<!-- 设置打包到war包的资源 -->
+	<resources>
+     	<resource>  
+              <directory>src/main/java</directory>  
+              <includes>  
+                  <include>**/*</include>  
+              </includes> 
+              <filtering>false</filtering> 
+        </resource> 
+    </resources>
+</build>
+	
+	
+
+</project>
