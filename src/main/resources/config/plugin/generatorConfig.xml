@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration >
+    
+    <classPathEntry location="D:\mysql-connector-java-5.1.30.jar"/>
+    
+  <context id="context1" targetRuntime="MyBatis3" defaultModelType="flat" >
+  
+    <property name="beginningDelimiter" value="`"/>
+    <property name="endingDelimiter" value="`"/>
+    
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://121.43.191.116:3306/testmybatis" userId="root" password="123" />
+    
+    <javaModelGenerator targetPackage="com.shark.mvctemp.dto" targetProject="mvctemp\src\main\java" />
+   
+    <sqlMapGenerator targetPackage="com.shark.mvctemp.dao.mapper" targetProject="mvctemp\src\main\java" />
+    
+    <javaClientGenerator targetPackage="com.shark.mvctemp.dao" targetProject="mvctemp\src\main\java" type="XMLMAPPER" />
+    
+    <table  tableName="%" >
+      
+    </table>
+  </context>
+</generatorConfiguration>
