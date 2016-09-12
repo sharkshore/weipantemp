@@ -17,7 +17,7 @@
     
     <javaClientGenerator targetPackage="com.shark.mvctemp.dao" targetProject="mvctemp\src\main\java" type="XMLMAPPER" />
     
-    <table  tableName="%" >
+    <table  tableName="test_mybatis" >
       
     </table>
   </context>
