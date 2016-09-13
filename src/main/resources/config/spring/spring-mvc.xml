@@ -59,6 +59,21 @@
     </mvc:interceptor>  
 </mvc:interceptors>
 
+<!--M配置视图-->
+<!-- 定义跳转的文件的前后缀 ，视图模式配置-->
+<!-- 指的是ModleAndView("视图名") -->
+<bean id="ViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
+        <property name="prefix" value="/WEB-INF/jsp/"></property> <!-- 视图文件的前缀 -->   
+        <property name="suffix" value=".jsp"></property> <!-- 视图文件的后缀名 -->   
+        <!-- view是用什么显示，这里是jsp，还可以用velocity之类的 -->  
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>    
+</bean> 
+
+<!--M静态资源 -->
+<!-- 对静态资源文件的访问,使用默认的Servlet来响应静态文件 -->
+<mvc:resources mapping="/html/**" location="/WEB-INF/html/" />
+
+
 
 </beans>  
 
