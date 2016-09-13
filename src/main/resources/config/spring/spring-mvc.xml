@@ -51,6 +51,13 @@
 	  
 <aop:aspectj-autoproxy proxy-target-class="true"/>
 
+<mvc:interceptors>  
+    <mvc:interceptor>  
+        <mvc:mapping path="/**"/>  <!-- 要拦截的url -->
+        <mvc:exclude-mapping path="/loginpage/**"/> <!-- 排除在外的url -->
+        <bean class="com.shark.mvctemp.common.interceptor.CommonsFilter" />  
+    </mvc:interceptor>  
+</mvc:interceptors>
 
 
 </beans>  
