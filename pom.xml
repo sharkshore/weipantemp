@@ -203,8 +203,13 @@
 	<groupId>org.mybatis</groupId>  
 	<artifactId>mybatis-spring</artifactId>  
 	<version>1.2.2</version>  
-</dependency>  
-
+</dependency> 
+<!-- mybatis分页插件 -->  
+<dependency>
+    <groupId>com.github.pagehelper</groupId>
+    <artifactId>pagehelper</artifactId>
+    <version>4.1.6</version>
+</dependency>
 
 <!-- fastjson -->
 <dependency>
@@ -347,7 +352,7 @@
         </resource> 
     </resources>
 </build>
-	
-	
+
+
 
 </project>

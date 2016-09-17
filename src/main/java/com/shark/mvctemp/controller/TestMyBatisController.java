@@ -9,9 +9,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.shark.mvctemp.common.webcode.AJAXResult;
 import com.shark.mvctemp.dto.TestMybatis;
 import com.shark.mvctemp.dto.TestMybatisExample;
@@ -34,12 +38,14 @@ public class TestMyBatisController {
 	
 	/*视图|controller*/
 	@RequestMapping("/mybatis/show.do")
-	public ModelAndView toShowAllServiceTypePage(){
+	public ModelAndView toShowAllServiceTypePage(@RequestParam Map<String,Object> prms){
+		PageHelper.startPage(prms);
 		TestMybatisExample example=new TestMybatisExample();
 		List list = service.selectByExample(example);
+		logger.info("--------总数:--<<{}>>---------",((Page)list).getTotal());
+		logger.info("--------最大页数:--<<{}>>---------",new PageInfo<>(list).getLastPage());
 		Map<String,Object> map=new HashMap<String,Object>();
 		map.put("list", list);
-		
 		ModelAndView mv=new ModelAndView("listkk", map);
 		return mv;
 	}
