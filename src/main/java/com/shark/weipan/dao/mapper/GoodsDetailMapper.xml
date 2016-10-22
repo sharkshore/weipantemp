@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shark.weipan.dao.GoodsDetailMapper">
+  <resultMap id="BaseResultMap" type="com.shark.weipan.dto.GoodsDetail">
+    <constructor>
+      <idArg column="goods_detail_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="status" javaType="java.lang.Integer" jdbcType="TINYINT" />
+      <arg column="goods_detail_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="goods_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="rate" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="effect_begin" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="effect_end" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    goods_detail_id, status, goods_detail_name, goods_id, rate, effect_begin, effect_end
+  </sql>
+  <select id="selectByExample" parameterType="com.shark.weipan.dto.GoodsDetailExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from goods_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from goods_detail
+    where goods_detail_id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from goods_detail
+    where goods_detail_id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.shark.weipan.dto.GoodsDetailExample">
+    delete from goods_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.shark.weipan.dto.GoodsDetail">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into goods_detail (goods_detail_id, status, goods_detail_name, 
+      goods_id, rate, effect_begin, 
+      effect_end)
+    values (#{id,jdbcType=INTEGER}, #{status,jdbcType=TINYINT}, #{name,jdbcType=VARCHAR}, 
+      #{goodsId,jdbcType=INTEGER}, #{rate,jdbcType=INTEGER}, #{effectBegin,jdbcType=TIMESTAMP}, 
+      #{effectEnd,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shark.weipan.dto.GoodsDetail">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into goods_detail
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      goods_detail_id,
+      <if test="status != null">
+        status,
+      </if>
+      <if test="name != null">
+        goods_detail_name,
+      </if>
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="rate != null">
+        rate,
+      </if>
+      <if test="effectBegin != null">
+        effect_begin,
+      </if>
+      <if test="effectEnd != null">
+        effect_end,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      #{id,jdbcType=INTEGER},
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="rate != null">
+        #{rate,jdbcType=INTEGER},
+      </if>
+      <if test="effectBegin != null">
+        #{effectBegin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effectEnd != null">
+        #{effectEnd,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.shark.weipan.dto.GoodsDetailExample" resultType="java.lang.Long">
+    select count(*) from goods_detail
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update goods_detail
+    <set>
+      <if test="record.id != null">
+        goods_detail_id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.name != null">
+        goods_detail_name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsId != null">
+        goods_id = #{record.goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.rate != null">
+        rate = #{record.rate,jdbcType=INTEGER},
+      </if>
+      <if test="record.effectBegin != null">
+        effect_begin = #{record.effectBegin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.effectEnd != null">
+        effect_end = #{record.effectEnd,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update goods_detail
+    set goods_detail_id = #{record.id,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=TINYINT},
+      goods_detail_name = #{record.name,jdbcType=VARCHAR},
+      goods_id = #{record.goodsId,jdbcType=INTEGER},
+      rate = #{record.rate,jdbcType=INTEGER},
+      effect_begin = #{record.effectBegin,jdbcType=TIMESTAMP},
+      effect_end = #{record.effectEnd,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shark.weipan.dto.GoodsDetail">
+    update goods_detail
+    <set>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="name != null">
+        goods_detail_name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null">
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="rate != null">
+        rate = #{rate,jdbcType=INTEGER},
+      </if>
+      <if test="effectBegin != null">
+        effect_begin = #{effectBegin,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effectEnd != null">
+        effect_end = #{effectEnd,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where goods_detail_id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shark.weipan.dto.GoodsDetail">
+    update goods_detail
+    set status = #{status,jdbcType=TINYINT},
+      goods_detail_name = #{name,jdbcType=VARCHAR},
+      goods_id = #{goodsId,jdbcType=INTEGER},
+      rate = #{rate,jdbcType=INTEGER},
+      effect_begin = #{effectBegin,jdbcType=TIMESTAMP},
+      effect_end = #{effectEnd,jdbcType=TIMESTAMP}
+    where goods_detail_id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

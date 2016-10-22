@@ -4,7 +4,7 @@
 		<Console name="CONSOLE" target="SYSTEM_OUT">
 			<PatternLayout pattern="[%d{HH:mm:ss.SSS}] [%-3p] %x %c{1}: %m%n" />
 		</Console>
-		<RollingRandomAccessFile name="logfile" fileName="../logs/mvctemp/pafa.log" filePattern="../logs/mvctemp/pafa.log.%d{yyyy-MM-dd}" immediateFlush="false" bufferSize="8192">
+		<RollingRandomAccessFile name="logfile" fileName="../logs/weipan/pafa.log" filePattern="../logs/weipan/pafa.log.%d{yyyy-MM-dd}" immediateFlush="false" bufferSize="8192">
 			<PatternLayout pattern="[%d{HH:mm:ss.SSS}] [%-3p] %x %c{1}: %m%n" />
 			<Policies>
 				<TimeBasedTriggeringPolicy interval="1" modulate="true" />

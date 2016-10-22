@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shark.weipan.dao.GameHistoryMapper">
+  <resultMap id="BaseResultMap" type="com.shark.weipan.dto.GameHistory">
+    <constructor>
+      <idArg column="game_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="goods_detail_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="game_direction" javaType="java.lang.Integer" jdbcType="TINYINT" />
+      <arg column="game_begin_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="game_end_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="begin_money" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="end_money" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="game_ticket_cost" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="result_type" javaType="java.lang.Integer" jdbcType="TINYINT" />
+      <arg column="result_get_money" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="extra_money" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    game_id, user_id, goods_detail_id, game_direction, game_begin_time, game_end_time, 
+    begin_money, end_money, game_ticket_cost, result_type, result_get_money, extra_money, 
+    create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.shark.weipan.dto.GameHistoryExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from game_history
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from game_history
+    where game_id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from game_history
+    where game_id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.shark.weipan.dto.GameHistoryExample">
+    delete from game_history
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.shark.weipan.dto.GameHistory">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into game_history (game_id, user_id, goods_detail_id, 
+      game_direction, game_begin_time, game_end_time, 
+      begin_money, end_money, game_ticket_cost, 
+      result_type, result_get_money, extra_money, 
+      create_time)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}, #{goodsDetailId,jdbcType=INTEGER}, 
+      #{direction,jdbcType=TINYINT}, #{beginTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, 
+      #{beginMoney,jdbcType=INTEGER}, #{endMoney,jdbcType=INTEGER}, #{ticketCost,jdbcType=INTEGER}, 
+      #{resultType,jdbcType=TINYINT}, #{resultGetMoney,jdbcType=INTEGER}, #{extraMoney,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.shark.weipan.dto.GameHistory">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.String">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into game_history
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      game_id,
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="goodsDetailId != null">
+        goods_detail_id,
+      </if>
+      <if test="direction != null">
+        game_direction,
+      </if>
+      <if test="beginTime != null">
+        game_begin_time,
+      </if>
+      <if test="endTime != null">
+        game_end_time,
+      </if>
+      <if test="beginMoney != null">
+        begin_money,
+      </if>
+      <if test="endMoney != null">
+        end_money,
+      </if>
+      <if test="ticketCost != null">
+        game_ticket_cost,
+      </if>
+      <if test="resultType != null">
+        result_type,
+      </if>
+      <if test="resultGetMoney != null">
+        result_get_money,
+      </if>
+      <if test="extraMoney != null">
+        extra_money,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      #{id,jdbcType=VARCHAR},
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsDetailId != null">
+        #{goodsDetailId,jdbcType=INTEGER},
+      </if>
+      <if test="direction != null">
+        #{direction,jdbcType=TINYINT},
+      </if>
+      <if test="beginTime != null">
+        #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="beginMoney != null">
+        #{beginMoney,jdbcType=INTEGER},
+      </if>
+      <if test="endMoney != null">
+        #{endMoney,jdbcType=INTEGER},
+      </if>
+      <if test="ticketCost != null">
+        #{ticketCost,jdbcType=INTEGER},
+      </if>
+      <if test="resultType != null">
+        #{resultType,jdbcType=TINYINT},
+      </if>
+      <if test="resultGetMoney != null">
+        #{resultGetMoney,jdbcType=INTEGER},
+      </if>
+      <if test="extraMoney != null">
+        #{extraMoney,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.shark.weipan.dto.GameHistoryExample" resultType="java.lang.Long">
+    select count(*) from game_history
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update game_history
+    <set>
+      <if test="record.id != null">
+        game_id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsDetailId != null">
+        goods_detail_id = #{record.goodsDetailId,jdbcType=INTEGER},
+      </if>
+      <if test="record.direction != null">
+        game_direction = #{record.direction,jdbcType=TINYINT},
+      </if>
+      <if test="record.beginTime != null">
+        game_begin_time = #{record.beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null">
+        game_end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.beginMoney != null">
+        begin_money = #{record.beginMoney,jdbcType=INTEGER},
+      </if>
+      <if test="record.endMoney != null">
+        end_money = #{record.endMoney,jdbcType=INTEGER},
+      </if>
+      <if test="record.ticketCost != null">
+        game_ticket_cost = #{record.ticketCost,jdbcType=INTEGER},
+      </if>
+      <if test="record.resultType != null">
+        result_type = #{record.resultType,jdbcType=TINYINT},
+      </if>
+      <if test="record.resultGetMoney != null">
+        result_get_money = #{record.resultGetMoney,jdbcType=INTEGER},
+      </if>
+      <if test="record.extraMoney != null">
+        extra_money = #{record.extraMoney,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update game_history
+    set game_id = #{record.id,jdbcType=VARCHAR},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      goods_detail_id = #{record.goodsDetailId,jdbcType=INTEGER},
+      game_direction = #{record.direction,jdbcType=TINYINT},
+      game_begin_time = #{record.beginTime,jdbcType=TIMESTAMP},
+      game_end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      begin_money = #{record.beginMoney,jdbcType=INTEGER},
+      end_money = #{record.endMoney,jdbcType=INTEGER},
+      game_ticket_cost = #{record.ticketCost,jdbcType=INTEGER},
+      result_type = #{record.resultType,jdbcType=TINYINT},
+      result_get_money = #{record.resultGetMoney,jdbcType=INTEGER},
+      extra_money = #{record.extraMoney,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shark.weipan.dto.GameHistory">
+    update game_history
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsDetailId != null">
+        goods_detail_id = #{goodsDetailId,jdbcType=INTEGER},
+      </if>
+      <if test="direction != null">
+        game_direction = #{direction,jdbcType=TINYINT},
+      </if>
+      <if test="beginTime != null">
+        game_begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        game_end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="beginMoney != null">
+        begin_money = #{beginMoney,jdbcType=INTEGER},
+      </if>
+      <if test="endMoney != null">
+        end_money = #{endMoney,jdbcType=INTEGER},
+      </if>
+      <if test="ticketCost != null">
+        game_ticket_cost = #{ticketCost,jdbcType=INTEGER},
+      </if>
+      <if test="resultType != null">
+        result_type = #{resultType,jdbcType=TINYINT},
+      </if>
+      <if test="resultGetMoney != null">
+        result_get_money = #{resultGetMoney,jdbcType=INTEGER},
+      </if>
+      <if test="extraMoney != null">
+        extra_money = #{extraMoney,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where game_id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shark.weipan.dto.GameHistory">
+    update game_history
+    set user_id = #{userId,jdbcType=INTEGER},
+      goods_detail_id = #{goodsDetailId,jdbcType=INTEGER},
+      game_direction = #{direction,jdbcType=TINYINT},
+      game_begin_time = #{beginTime,jdbcType=TIMESTAMP},
+      game_end_time = #{endTime,jdbcType=TIMESTAMP},
+      begin_money = #{beginMoney,jdbcType=INTEGER},
+      end_money = #{endMoney,jdbcType=INTEGER},
+      game_ticket_cost = #{ticketCost,jdbcType=INTEGER},
+      result_type = #{resultType,jdbcType=TINYINT},
+      result_get_money = #{resultGetMoney,jdbcType=INTEGER},
+      extra_money = #{extraMoney,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where game_id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

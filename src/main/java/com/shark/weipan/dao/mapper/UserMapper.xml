@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shark.weipan.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.shark.weipan.dto.User">
+    <constructor>
+      <idArg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="login_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="login_pwd" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="weixin_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="nick_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="mobile" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="email" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="sex" javaType="java.lang.Integer" jdbcType="TINYINT" />
+      <arg column="status" javaType="java.lang.Integer" jdbcType="TINYINT" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="manager_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="parent_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="description" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="can_trade" javaType="java.lang.Integer" jdbcType="TINYINT" />
+      <arg column="can_draw" javaType="java.lang.Integer" jdbcType="TINYINT" />
+      <arg column="commission_percent" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="commision_balance" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="game_balance" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="game_ticket" javaType="java.lang.Integer" jdbcType="INTEGER" />
+    </constructor>
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.shark.weipan.dto.User">
+    <constructor>
+      <idArg column="user_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="login_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="login_pwd" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="weixin_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="nick_name" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="mobile" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="email" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="sex" javaType="java.lang.Integer" jdbcType="TINYINT" />
+      <arg column="status" javaType="java.lang.Integer" jdbcType="TINYINT" />
+      <arg column="create_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="manager_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="parent_id" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="description" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="can_trade" javaType="java.lang.Integer" jdbcType="TINYINT" />
+      <arg column="can_draw" javaType="java.lang.Integer" jdbcType="TINYINT" />
+      <arg column="commission_percent" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="commision_balance" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="game_balance" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="game_ticket" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="head_thumb" javaType="_byte[]" jdbcType="LONGVARBINARY" />
+    </constructor>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    user_id, login_name, login_pwd, weixin_name, nick_name, mobile, email, sex, status, 
+    create_time, update_time, manager_id, parent_id, description, can_trade, can_draw, 
+    commission_percent, commision_balance, game_balance, game_ticket
+  </sql>
+  <sql id="Blob_Column_List">
+    head_thumb
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.shark.weipan.dto.UserExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.shark.weipan.dto.UserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from user
+    where user_id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from user
+    where user_id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.shark.weipan.dto.UserExample">
+    delete from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.shark.weipan.dto.User">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user (user_id, login_name, login_pwd, 
+      weixin_name, nick_name, mobile, 
+      email, sex, status, 
+      create_time, update_time, manager_id, 
+      parent_id, description, can_trade, 
+      can_draw, commission_percent, commision_balance, 
+      game_balance, game_ticket, head_thumb
+      )
+    values (#{id,jdbcType=INTEGER}, #{loginName,jdbcType=VARCHAR}, #{loginPwd,jdbcType=VARCHAR}, 
+      #{weixinName,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{sex,jdbcType=TINYINT}, #{status,jdbcType=TINYINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{managerId,jdbcType=INTEGER}, 
+      #{parentId,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{canTrade,jdbcType=TINYINT}, 
+      #{canDraw,jdbcType=TINYINT}, #{commissionPercent,jdbcType=INTEGER}, #{commisionBalance,jdbcType=INTEGER}, 
+      #{gameBalance,jdbcType=INTEGER}, #{gameTicket,jdbcType=INTEGER}, #{headThumb,jdbcType=LONGVARBINARY}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.shark.weipan.dto.User">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      user_id,
+      <if test="loginName != null">
+        login_name,
+      </if>
+      <if test="loginPwd != null">
+        login_pwd,
+      </if>
+      <if test="weixinName != null">
+        weixin_name,
+      </if>
+      <if test="nickName != null">
+        nick_name,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="managerId != null">
+        manager_id,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="canTrade != null">
+        can_trade,
+      </if>
+      <if test="canDraw != null">
+        can_draw,
+      </if>
+      <if test="commissionPercent != null">
+        commission_percent,
+      </if>
+      <if test="commisionBalance != null">
+        commision_balance,
+      </if>
+      <if test="gameBalance != null">
+        game_balance,
+      </if>
+      <if test="gameTicket != null">
+        game_ticket,
+      </if>
+      <if test="headThumb != null">
+        head_thumb,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      #{id,jdbcType=INTEGER},
+      <if test="loginName != null">
+        #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPwd != null">
+        #{loginPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinName != null">
+        #{weixinName,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="managerId != null">
+        #{managerId,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="canTrade != null">
+        #{canTrade,jdbcType=TINYINT},
+      </if>
+      <if test="canDraw != null">
+        #{canDraw,jdbcType=TINYINT},
+      </if>
+      <if test="commissionPercent != null">
+        #{commissionPercent,jdbcType=INTEGER},
+      </if>
+      <if test="commisionBalance != null">
+        #{commisionBalance,jdbcType=INTEGER},
+      </if>
+      <if test="gameBalance != null">
+        #{gameBalance,jdbcType=INTEGER},
+      </if>
+      <if test="gameTicket != null">
+        #{gameTicket,jdbcType=INTEGER},
+      </if>
+      <if test="headThumb != null">
+        #{headThumb,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.shark.weipan.dto.UserExample" resultType="java.lang.Long">
+    select count(*) from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user
+    <set>
+      <if test="record.id != null">
+        user_id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.loginName != null">
+        login_name = #{record.loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginPwd != null">
+        login_pwd = #{record.loginPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weixinName != null">
+        weixin_name = #{record.weixinName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickName != null">
+        nick_name = #{record.nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null">
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=TINYINT},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=TINYINT},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.managerId != null">
+        manager_id = #{record.managerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.parentId != null">
+        parent_id = #{record.parentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.canTrade != null">
+        can_trade = #{record.canTrade,jdbcType=TINYINT},
+      </if>
+      <if test="record.canDraw != null">
+        can_draw = #{record.canDraw,jdbcType=TINYINT},
+      </if>
+      <if test="record.commissionPercent != null">
+        commission_percent = #{record.commissionPercent,jdbcType=INTEGER},
+      </if>
+      <if test="record.commisionBalance != null">
+        commision_balance = #{record.commisionBalance,jdbcType=INTEGER},
+      </if>
+      <if test="record.gameBalance != null">
+        game_balance = #{record.gameBalance,jdbcType=INTEGER},
+      </if>
+      <if test="record.gameTicket != null">
+        game_ticket = #{record.gameTicket,jdbcType=INTEGER},
+      </if>
+      <if test="record.headThumb != null">
+        head_thumb = #{record.headThumb,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update user
+    set user_id = #{record.id,jdbcType=INTEGER},
+      login_name = #{record.loginName,jdbcType=VARCHAR},
+      login_pwd = #{record.loginPwd,jdbcType=VARCHAR},
+      weixin_name = #{record.weixinName,jdbcType=VARCHAR},
+      nick_name = #{record.nickName,jdbcType=VARCHAR},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=TINYINT},
+      status = #{record.status,jdbcType=TINYINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      manager_id = #{record.managerId,jdbcType=INTEGER},
+      parent_id = #{record.parentId,jdbcType=INTEGER},
+      description = #{record.description,jdbcType=VARCHAR},
+      can_trade = #{record.canTrade,jdbcType=TINYINT},
+      can_draw = #{record.canDraw,jdbcType=TINYINT},
+      commission_percent = #{record.commissionPercent,jdbcType=INTEGER},
+      commision_balance = #{record.commisionBalance,jdbcType=INTEGER},
+      game_balance = #{record.gameBalance,jdbcType=INTEGER},
+      game_ticket = #{record.gameTicket,jdbcType=INTEGER},
+      head_thumb = #{record.headThumb,jdbcType=LONGVARBINARY}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user
+    set user_id = #{record.id,jdbcType=INTEGER},
+      login_name = #{record.loginName,jdbcType=VARCHAR},
+      login_pwd = #{record.loginPwd,jdbcType=VARCHAR},
+      weixin_name = #{record.weixinName,jdbcType=VARCHAR},
+      nick_name = #{record.nickName,jdbcType=VARCHAR},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=TINYINT},
+      status = #{record.status,jdbcType=TINYINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      manager_id = #{record.managerId,jdbcType=INTEGER},
+      parent_id = #{record.parentId,jdbcType=INTEGER},
+      description = #{record.description,jdbcType=VARCHAR},
+      can_trade = #{record.canTrade,jdbcType=TINYINT},
+      can_draw = #{record.canDraw,jdbcType=TINYINT},
+      commission_percent = #{record.commissionPercent,jdbcType=INTEGER},
+      commision_balance = #{record.commisionBalance,jdbcType=INTEGER},
+      game_balance = #{record.gameBalance,jdbcType=INTEGER},
+      game_ticket = #{record.gameTicket,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.shark.weipan.dto.User">
+    update user
+    <set>
+      <if test="loginName != null">
+        login_name = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPwd != null">
+        login_pwd = #{loginPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="weixinName != null">
+        weixin_name = #{weixinName,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="managerId != null">
+        manager_id = #{managerId,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="canTrade != null">
+        can_trade = #{canTrade,jdbcType=TINYINT},
+      </if>
+      <if test="canDraw != null">
+        can_draw = #{canDraw,jdbcType=TINYINT},
+      </if>
+      <if test="commissionPercent != null">
+        commission_percent = #{commissionPercent,jdbcType=INTEGER},
+      </if>
+      <if test="commisionBalance != null">
+        commision_balance = #{commisionBalance,jdbcType=INTEGER},
+      </if>
+      <if test="gameBalance != null">
+        game_balance = #{gameBalance,jdbcType=INTEGER},
+      </if>
+      <if test="gameTicket != null">
+        game_ticket = #{gameTicket,jdbcType=INTEGER},
+      </if>
+      <if test="headThumb != null">
+        head_thumb = #{headThumb,jdbcType=LONGVARBINARY},
+      </if>
+    </set>
+    where user_id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.shark.weipan.dto.User">
+    update user
+    set login_name = #{loginName,jdbcType=VARCHAR},
+      login_pwd = #{loginPwd,jdbcType=VARCHAR},
+      weixin_name = #{weixinName,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      manager_id = #{managerId,jdbcType=INTEGER},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      can_trade = #{canTrade,jdbcType=TINYINT},
+      can_draw = #{canDraw,jdbcType=TINYINT},
+      commission_percent = #{commissionPercent,jdbcType=INTEGER},
+      commision_balance = #{commisionBalance,jdbcType=INTEGER},
+      game_balance = #{gameBalance,jdbcType=INTEGER},
+      game_ticket = #{gameTicket,jdbcType=INTEGER},
+      head_thumb = #{headThumb,jdbcType=LONGVARBINARY}
+    where user_id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.shark.weipan.dto.User">
+    update user
+    set login_name = #{loginName,jdbcType=VARCHAR},
+      login_pwd = #{loginPwd,jdbcType=VARCHAR},
+      weixin_name = #{weixinName,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=TINYINT},
+      status = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      manager_id = #{managerId,jdbcType=INTEGER},
+      parent_id = #{parentId,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      can_trade = #{canTrade,jdbcType=TINYINT},
+      can_draw = #{canDraw,jdbcType=TINYINT},
+      commission_percent = #{commissionPercent,jdbcType=INTEGER},
+      commision_balance = #{commisionBalance,jdbcType=INTEGER},
+      game_balance = #{gameBalance,jdbcType=INTEGER},
+      game_ticket = #{gameTicket,jdbcType=INTEGER}
+    where user_id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
